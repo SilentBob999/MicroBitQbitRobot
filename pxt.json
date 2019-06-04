@@ -1,0 +1,14 @@
+{
+    "name": "Qbit",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "qbit": "github:lewansoul2018/qbit#dbf36d3871383344a58666ad0199df298d71a77a"
+    },
+    "description": "",
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md"
+    ]
+}
