@@ -1,15 +1,11 @@
-let MaxSpeedR = 0
 let MaxSpeed = 0
+let MaxSpeedR = 0
 let M2Target = 0
 let Motor2Speed = 0
 let M1Target = 0
+let SpeedFromDist = 0
 let Motor1Speed = 0
 let UltrasonicVar = 0
-let SpeedFromDist = 0
-let RGB = [QbitRGBColors.Red, QbitRGBColors.Blue, QbitRGBColors.Green, QbitRGBColors.Purple, QbitRGBColors.White]
-let RGBIndex = 0
-let LightsMode = 1 // 1 = auto 2 = Cops
-
 input.onGesture(Gesture.ThreeG, function () {
 
 })
@@ -19,11 +15,11 @@ input.onGesture(Gesture.SixG, function () {
     music.playTone(262, music.beat(BeatFraction.Half))
     M1Target = Math.constrain(M1Target, -10, 10)
     M2Target = Math.constrain(M2Target, -10, 10)
-    Move22()
+    Move222()
     basic.pause(200)
 })
 input.onButtonPressed(Button.A, function () {
-    SetColorsL()
+    SetColorsL2()
     RGB.length
 })
 input.onButtonPressed(Button.B, function () {
@@ -34,13 +30,13 @@ input.onButtonPressed(Button.B, function () {
         LightsMode = 1
     }
 })
-function SetColorsL() {
+function SetColorsL2() {
     RGBIndex += 1
     if (RGBIndex >= RGB.length) {
         RGBIndex = 0
     }
 }
-function CheckLights() {
+function CheckLights2() {
     if (LightsMode == 1) {
         if (qbit.getSensorLightLevel() == 0) {
             qbit.setPixelRGB(Lights.Light1, RGB[RGBIndex])
@@ -59,9 +55,7 @@ function CheckLights() {
         qbit.showLight()
     }
 }
-
-
-function Move22() {
+function Move222() {
     if (M1Target < 30 || M2Target < 30) {
         if (M1Target > M2Target) {
             M1Target = M1Target + 40
@@ -75,7 +69,7 @@ function Move22() {
     Motor2Speed = Math.constrain(M2Target, MaxSpeedR, MaxSpeed)
     qbit.setMotorSpeed(Motor1Speed, Motor2Speed)
 }
-function ReadSensor22() {
+function ReadSensor222() {
     UltrasonicVar = qbit.Ultrasonic()
     SpeedFromDist = Math.constrain(Math.map(UltrasonicVar, 40, 120, 30, 100), -100, 100)
     if (UltrasonicVar < 40) {
@@ -86,14 +80,19 @@ function ReadSensor22() {
     while (qbit.obstacleSensor(qbit.ObstacleSensor.SENSOR1_OBSTACLE)) {
         M1Target = M1Target + 20
         M2Target = M2Target - 80
-        Move22()
+        Move222()
     }
     while (qbit.obstacleSensor(qbit.ObstacleSensor.SENSOR2_OBSTACLE)) {
         M1Target = M1Target - 80
         M2Target = M2Target + 20
-        Move22()
+        Move222()
     }
 }
+let RGBIndex = 0
+let RGB: number[] = []
+let LightsMode = 0
+RGB = [QbitRGBColors.Red, QbitRGBColors.Blue, QbitRGBColors.Green, QbitRGBColors.Purple, QbitRGBColors.White]
+LightsMode = 1
 qbit.qbitInit()
 qbit.setQbitRun(qbit.QbitRunType.RUN)
 qbit.setBrightness(10)
@@ -105,7 +104,7 @@ M2Target = 0
 Motor1Speed = 0
 Motor2Speed = 0
 basic.forever(function () {
-    ReadSensor22()
-    Move22()
-    CheckLights()
+    ReadSensor222()
+    Move222()
+    CheckLights2()
 })
