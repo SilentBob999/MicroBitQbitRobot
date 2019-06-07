@@ -72,8 +72,8 @@ function Move222() {
 function ReadSensor222() {
     UltrasonicVar = qbit.Ultrasonic()
     SpeedFromDist = Math.constrain(Math.map(UltrasonicVar, 40, 120, 30, 100), -100, 100)
-    if (UltrasonicVar < 40) {
-        SpeedFromDist = Math.constrain(Math.map(UltrasonicVar, 0, 40, -100, -30), -100, 100)
+    if (UltrasonicVar < 60) {
+        SpeedFromDist = Math.constrain(Math.map(UltrasonicVar, 5, 60, -100, -30), -100, 100)
     }
     M1Target = SpeedFromDist
     M2Target = SpeedFromDist
@@ -81,11 +81,13 @@ function ReadSensor222() {
         M1Target = M1Target + 20
         M2Target = M2Target - 80
         Move222()
+        basic.pause(200)
     }
     while (qbit.obstacleSensor(qbit.ObstacleSensor.SENSOR2_OBSTACLE)) {
         M1Target = M1Target - 80
         M2Target = M2Target + 20
         Move222()
+        basic.pause(200)
     }
 }
 let RGBIndex = 0
